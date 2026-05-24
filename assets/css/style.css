@@ -311,17 +311,6 @@ section:nth-child(even) {
   background: var(--surface);
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: none;
-}
-
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -720,7 +709,13 @@ footer a:hover { color: var(--text); }
 }
 
 @media (max-width: 768px) {
-  .section-inner { padding: 2.5rem 1.5rem; }
+  .section-inner { 
+    padding-top: 2.5rem !important;
+    padding-bottom: 4.5rem !important;
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+
   .container { padding: 0 1.5rem; }
 
   .nav-toggle { display: flex; }

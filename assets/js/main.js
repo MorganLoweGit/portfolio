@@ -48,30 +48,6 @@ nav_menu?.querySelectorAll('a').forEach(a => {
   });
 });
 
-const reveal_els = document.querySelectorAll('.reveal');
-
-const reveal_observer = new IntersectionObserver(
-  entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        reveal_observer.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.12 }
-);
-
-reveal_els.forEach(el => reveal_observer.observe(el));
-
-document.querySelectorAll('.section-inner > *').forEach((el, i) => {
-  if (!el.classList.contains('reveal')) {
-    el.classList.add('reveal');
-    el.style.transitionDelay = `${i * 0.08}s`;
-    reveal_observer.observe(el);
-  }
-});
-
 const SKILL_LOGOS = {
   'C#': {
     logo:    'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg',

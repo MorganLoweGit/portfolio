@@ -82,11 +82,11 @@ const SKILL_LOGOS = {
     website: 'https://www.autodesk.com/products/maya',
   },
   'Adobe Photoshop': {
-    logo:    'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg',
+    logo:    'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-original.svg',
     website: 'https://www.adobe.com/products/photoshop.html',
   },
   'Adobe Illustrator': {
-    logo:    'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg',
+    logo:    'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-original.svg',
     website: 'https://www.adobe.com/products/illustrator.html',
   },
   'Visual Studio Code': {

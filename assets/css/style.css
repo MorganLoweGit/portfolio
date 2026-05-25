@@ -958,3 +958,160 @@ footer a:hover { color: var(--text); }
 .project-card--expandable:not(.project-card--expanded):hover {
   border-color: var(--accent);
 }
+
+/* ================================================================
+   WIDE CARD LAYOUT — featured (always) + expandable (when expanded)
+   ================================================================ */
+
+.project-card--featured,
+.project-card--expanded {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  min-height: 380px;
+}
+
+/* Left: media fills full card height */
+.project-card--featured .project-media-wrap,
+.project-card--expanded .project-media-wrap {
+  flex: 0 0 55%;
+  min-width: 0;
+  display: flex;
+}
+.project-card--featured .project-media,
+.project-card--expanded .project-media {
+  aspect-ratio: unset;
+  height: 100%;
+  flex: 1 1 auto;
+}
+
+/* Right panel */
+.project-card--featured .project-content,
+.project-card--expanded .project-content {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 1.75rem 2rem;
+  border-left: 1px solid var(--border);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Featured: year is a loose span, absolute top-right ── */
+.project-card--featured .project-content > .project-year {
+  position: absolute;
+  top: 1.75rem;
+  right: 2rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+  white-space: nowrap;
+  line-height: 1.5;
+}
+.project-card--featured .project-content h3 {
+  padding-right: 6rem;
+  margin-bottom: 0.75rem;
+}
+.project-card--featured .project-content > p {
+  flex: 1 1 auto;
+  margin-bottom: 0;
+}
+.project-card--featured .project-content > .project-tags {
+  margin-top: 1.25rem;
+}
+.project-card--featured .project-content .project-links {
+  margin-top: 0.6rem;
+}
+
+/* ── Expanded expandable: use flex order to reposition without changing DOM ──
+   DOM order: project-meta(year+tags) → h3 → p → links
+   Visual order we want: h3(+year abs) → p → tags → links               */
+
+.project-card--expanded .project-content {
+  /* flex column already set above */
+}
+
+/* Hide the project-meta block itself; we'll show year+tags individually */
+.project-card--expanded .project-content .project-meta {
+  display: contents; /* dissolve the wrapper, children become flex items */
+}
+
+/* year: absolute top-right */
+.project-card--expanded .project-content .project-year {
+  position: absolute;
+  top: 1.75rem;
+  right: 2rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+  white-space: nowrap;
+  line-height: 1.5;
+  order: 0; /* doesn't matter since it's absolute */
+}
+
+/* tags: after p, before links */
+.project-card--expanded .project-content .project-tags {
+  order: 3;
+  margin-top: 1.25rem;
+  margin-bottom: 0;
+}
+
+.project-card--expanded .project-content h3 {
+  order: 1;
+  padding-right: 6rem;
+  margin-bottom: 0.75rem;
+}
+
+.project-card--expanded .project-content > p {
+  order: 2;
+  flex: 1 1 auto;
+  margin-bottom: 0;
+}
+
+.project-card--expanded .project-content .project-links {
+  order: 4;
+  margin-top: 0.6rem;
+}
+
+/* Compact card: media-wrap unwraps */
+.project-card:not(.project-card--featured):not(.project-card--expanded) .project-media-wrap {
+  display: contents;
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .project-card--featured,
+  .project-card--expanded {
+    flex-direction: column;
+    min-height: unset;
+  }
+  .project-card--featured .project-media-wrap,
+  .project-card--expanded .project-media-wrap { flex: none; width: 100%; }
+  .project-card--featured .project-media,
+  .project-card--expanded .project-media { aspect-ratio: 16 / 9; height: auto; }
+  .project-card--featured .project-content,
+  .project-card--expanded .project-content { border-left: none; border-top: 1px solid var(--border); }
+  .project-card--featured .project-content > .project-year,
+  .project-card--expanded .project-content .project-year {
+    position: static;
+    float: right;
+    margin: 0 0 0.5rem 0.6rem;
+  }
+  .project-card--featured .project-content h3,
+  .project-card--expanded .project-content h3 { padding-right: 0; }
+}
+
+/* ── Click-to-expand ── */
+.project-card--expandable {
+  cursor: pointer;
+  transition: border-color var(--transition), transform var(--transition);
+}
+.project-card--expandable a,
+.project-card--expandable button { cursor: pointer; }
+.project-card--expandable:not(.project-card--expanded):hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+}
+.project-card--expandable .project-content,
+.project-card--expandable .project-media-wrap {
+  transition: opacity 0.25s ease 0.05s;
+}
+.project-card--expandable.is-animating .project-content,
+.project-card--expandable.is-animating .project-media-wrap { opacity: 0; }

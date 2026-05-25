@@ -4,8 +4,9 @@
   --bg:        #0b0c0e;
   --surface:   #13151a;
   --border:    #23262f;
-  --text:      #e8e6e0;
-  --muted:     #6b6f7a;
+  --text:      #f0ede8;
+  --muted:     #9199a8;
+  --tags:      #7a8494;
   --accent:    #c8f04e;
   --accent-dim:#a8d03a;
   --font-head: 'League Spartan', 'Archivo Black', system-ui, sans-serif;
@@ -379,7 +380,7 @@ section:nth-child(even) {
   padding: 0.35rem 0.85rem;
   border: 1px solid var(--border);
   border-radius: 999px;
-  color: var(--muted);
+  color: var(--tags);
   transition: all var(--transition);
   display: flex;
   align-items: center;
@@ -509,7 +510,7 @@ section:nth-child(even) {
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 999px;
-  color: var(--muted);
+  color: var(--tags);
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;

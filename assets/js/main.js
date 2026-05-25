@@ -316,3 +316,30 @@ function init_video_controls() {
 }
 
 init_video_controls();
+
+/* ─── Expandable past-work cards (click anywhere on card) ────────────────── */
+(function init_expandable_cards() {
+  document.querySelectorAll('.project-card--expandable').forEach(card => {
+    card.addEventListener('click', e => {
+      // Don't toggle if the user clicked a link, button, or video control
+      if (e.target.closest('a, button, .video-controls')) return;
+
+      const expanding = !card.classList.contains('project-card--expanded');
+
+      // 1. Fade out inner content
+      card.classList.add('is-animating');
+
+      setTimeout(() => {
+        // 2. Swap layout
+        card.classList.toggle('project-card--expanded', expanding);
+
+        // 3. Fade back in
+        card.classList.remove('is-animating');
+        card.classList.add('is-settling');
+        card.addEventListener('transitionend', () => {
+          card.classList.remove('is-settling');
+        }, { once: true });
+      }, 220);
+    });
+  });
+})();

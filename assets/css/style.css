@@ -779,3 +779,181 @@ footer a:hover { color: var(--text); }
   height: 12px;
   fill: currentColor;
 }
+/* ─── Full-width (featured / expanded) card layout ─────────────────────── */
+
+/* Both highlighted-work (auto) and past-work (toggled) use the same layout  */
+.project-card--featured,
+.project-card--expanded {
+  grid-column: 1 / -1;           /* span all columns */
+  flex-direction: row;           /* side-by-side */
+  min-height: 340px;
+}
+
+/* Left panel: media + meta stacked */
+.project-card--featured .project-media-wrap,
+.project-card--expanded .project-media-wrap {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 58%;
+  min-width: 0;
+}
+
+.project-card--featured .project-media,
+.project-card--expanded .project-media {
+  aspect-ratio: 16 / 9;
+  flex: 1 1 auto;
+}
+
+.project-card--featured .project-meta,
+.project-card--expanded .project-meta {
+  padding: 0.9rem 1.1rem 0.75rem;
+  border-top: 1px solid var(--border);
+  margin-bottom: 0;
+}
+
+/* Right panel: written content */
+.project-card--featured .project-content,
+.project-card--expanded .project-content {
+  flex: 1 1 0;
+  padding: 2rem 2rem 1.75rem;
+  border-left: 1px solid var(--border);
+}
+
+/* In wide layout the meta lives inside media-wrap, not inside project-content */
+.project-card--featured .project-content .project-meta,
+.project-card--expanded .project-content .project-meta {
+  display: none;               /* hide the one inside project-content */
+}
+
+/* ─── Compact card: wrap media + meta for DOM consistency ─────────────── */
+/* The .project-media-wrap exists in both layouts; in compact it's transparent */
+.project-card:not(.project-card--featured):not(.project-card--expanded) .project-media-wrap {
+  display: contents;           /* unwrap — behaves as if the div isn't there */
+}
+
+/* ─── Expand toggle button (past-work only) ─────────────────────────────── */
+.expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.25rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-family: var(--font-body);
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition);
+  white-space: nowrap;
+}
+
+.expand-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.expand-btn svg {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  fill: currentColor;
+}
+
+.project-card--expanded .expand-btn svg {
+  transform: rotate(45deg);
+}
+
+/* ─── Transition animation ───────────────────────────────────────────────── */
+.project-card--expandable {
+  /* Smooth most properties; grid-column can't animate, so we get
+     a snap-then-settle feel via the inner transform */
+  transition:
+    border-color var(--transition),
+    transform var(--transition),
+    box-shadow 0.3s ease;
+}
+
+/* The inner content fades in when expanding */
+.project-card--expandable .project-content,
+.project-card--expandable .project-media-wrap {
+  transition: opacity 0.25s ease 0.05s;
+}
+
+.project-card--expandable.is-animating .project-content,
+.project-card--expandable.is-animating .project-media-wrap {
+  opacity: 0;
+}
+
+/* After layout switch, fade back in */
+.project-card--expandable.is-settling .project-content,
+.project-card--expandable.is-settling .project-media-wrap {
+  opacity: 1;
+}
+
+
+/* ─── Responsive: collapse to stacked below 700 px ──────────────────────── */
+@media (max-width: 700px) {
+  .project-card--featured,
+  .project-card--expanded {
+    flex-direction: column;
+  }
+
+  .project-card--featured .project-media-wrap,
+  .project-card--expanded .project-media-wrap {
+    flex: none;
+    width: 100%;
+  }
+
+  .project-card--featured .project-content,
+  .project-card--expanded .project-content {
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+}
+
+/* ─── Meta visibility: compact vs wide ──────────────────────────────────── */
+
+/* In compact cards, hide the meta clone inside media-wrap (only show the one in content) */
+.project-card:not(.project-card--featured):not(.project-card--expanded) .project-media-wrap .project-meta {
+  display: none;
+}
+
+/* In wide cards, hide the meta inside project-content (show the one in media-wrap) */
+.project-card--featured .project-content .project-meta,
+.project-card--expanded .project-content .project-meta {
+  display: none;
+}
+
+/* Wide-card meta: restore the original float design (year right, tags wrap naturally) */
+.project-card--featured .project-media-wrap .project-meta,
+.project-card--expanded .project-media-wrap .project-meta {
+  padding: 0.75rem 1rem 0.6rem;
+  border-top: 1px solid var(--border);
+  overflow: hidden;
+  display: block;     /* restore block so float works */
+  margin-bottom: 0;
+}
+
+/* ─── Expandable cards: click-to-expand ─────────────────────────────────── */
+.project-card--expandable {
+  cursor: pointer;
+}
+
+/* When expanded, restore default cursor on interactive children */
+.project-card--expandable a,
+.project-card--expandable button,
+.project-card--expandable .video-controls {
+  cursor: auto;
+}
+
+.project-card--expandable a { cursor: pointer; }
+.project-card--expandable button { cursor: pointer; }
+
+/* Subtle "click me" hint on hover for compact expandable cards */
+.project-card--expandable:not(.project-card--expanded):hover {
+  border-color: var(--accent);
+}

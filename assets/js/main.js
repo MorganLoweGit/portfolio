@@ -113,6 +113,10 @@ const SKILL_LOGOS = {
     logo:    'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg',
     website: 'https://www.tensorflow.org/tensorboard',
   },
+  'GIMP': {
+      logo:    'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/gimp/gimp-original.svg',
+      website: 'https://www.gimp.org/',
+  },
   'SDL2': {
     logo:    'assets/images/logos/sdl2-icon.png',
     website: 'https://wiki.libsdl.org/SDL2/FrontPage',
